@@ -239,12 +239,14 @@
   T.NodeReporter.prototype.reportTest = function(name, testOutput){
     var constructor = this.constructor;
     T.waitFor(function(){ return testOutput.running !== true; }, function(){
-      var output = name+': '+testOutput.result;
+      var output = name+': '+testOutput.result, prefix = '', suffix = '';
       if (testOutput.result !== 'pass' && testOutput.message) {
+        prefix = '\033[31m';
+        suffix = '\033[39m';
         output += ': '+testOutput.message;
       }
       output += ' ('+testOutput.assertions.length+' assertion'+(testOutput.assertions.length === 1 ? '' : 's')+' run)';
-      constructor.puts(output);
+      constructor.puts(prefix + output + suffix);
     });
   };
 
